@@ -16,7 +16,7 @@ class PasswordManager:
         root.columnconfigure(0, weight=1)
         root.rowconfigure(0, weight=1)
 
-        
+
         # Entries
         self.service = StringVar()
         self.service_entry = ttk.Entry(mainframe, width=30, textvariable=self.service)
@@ -67,14 +67,14 @@ class PasswordManager:
         save = ttk.Button(mainframe, text="Save", default="active", command=self.save)
         save.grid(column=1, row=7, sticky=N)
 
-        # Search Service 
+        # Search Service
         search = ttk.Button(mainframe, text="Search", command= self.search)
         search.grid(column=2, row=1, sticky=N)
-        
+
 
         for child in mainframe.winfo_children():
             child.grid_configure(padx=10, pady=5)
-        
+
 
 
     def save(self):
@@ -82,11 +82,11 @@ class PasswordManager:
         fieldnames = ["service", "login", "password"]
         is_file_exist = os.path.isfile("passwords.csv")
         data = []
-        
+
         service = self.service.get().lower().strip()
         login = self.login.get().strip()
         password = self.password.get().strip()
-        
+
         try:
             if len(service) < 1 or len(login) < 1 or len(password) < 1:
                 raise ValueError
@@ -123,7 +123,7 @@ class PasswordManager:
         except:
             messagebox.showerror(message="Password not saved")
 
-        
+
     def create_csv(self, f):
         with open("passwords.csv", "w", newline="") as new_file:
             new_writer = csv.DictWriter(new_file, fieldnames=f)
@@ -177,19 +177,20 @@ class PasswordManager:
 
         if mix == "":
             return messagebox.showwarning(message="Too few options")
-        
-        
+
+
         items = random.choices(list(mix), k=quantity)
         password = "".join(items)
 
         self.password_entry.delete(0, "end")
         self.password_entry.insert(0, password)
 
-    
 
+def main():
+        root = Tk()
+        PasswordManager(root)
+        root.mainloop()
 
 
 if __name__ == "__main__":
-    root = Tk()
-    PasswordManager(root)
-    root.mainloop()
+    main()
